@@ -226,7 +226,7 @@
         }
       </style> -->
 
-      <h3 class="title is-3">History-Aware Streaming Reconstruction  <strong style="color: green;">w/o Temporal Training</strong></h3>
+      <h3 class="title is-3"><strong style="color: orange;">History-Aware</strong> Streaming Reconstruction  <strong style="color: green;">w/o Temporal Training</strong></h3>
       <br>
       <div style="text-align: center;">
         <img src="./static/images/flicker_figure.png" width="80%" />
@@ -279,18 +279,19 @@
         <h2 class="title is-3">Method Overview</h2>
 
         <div>
-          <p class="has-text-justified">We present a Hybrid Splat-Voxel feed-forward scene reconstruction framework. Our system is trained only on static scenes, and can generalize at inference time for zero-shot history-aware 4D novel view streaming.</p>
+          <p class="has-text-justified">We present a <strong>Hybrid Splat-Voxel feed-forward scene reconstruction framework</strong>. Our system is trained only on static scenes, and can generalize at inference time for <em> zero-shot history-aware 4D novel view streaming </em>.</p>
         </div>
         <br>
 
-        <img src="./static/images/paper_overview.png" alt="Teaser image of SplatVoxel" class="'center" />
-        <figcaption class="has-text-justified">Our hybrid SplatVoxel model first extracts input image features using a multi-view transformer, which outputs pixel-aligned Gaussian splats for each input image with associated features. The splat features are then deposited onto a coarse-to-fine voxel grid using the decoded position, and a secondary sparse voxel transformer processes the grid features to output final Gaussian parameters. To merge history, we compute the triangulated scene flow from the input views and perform keypoint guided deformations. These deformed splats can be treated identically to the input-aligned splats, and be similarly deposited into voxel grid to merge the previous state with the current state. Our system is trained only on static scenes, and can generalize to dynamic scenes during inference.</figcaption>
+        <img src="./static/images/paper_overview.png" alt="Overview image of SplatVoxel" class="'center" width="100%"/>
+        <figcaption class="has-text-justified">Our hybrid SplatVoxel model first extracts input image features using a multi-view transformer, which outputs pixel-aligned Gaussian splats for each input image with associated features. The splat features are then deposited onto a coarse-to-fine voxel grid using the decoded position, and a secondary sparse voxel transformer processes the grid features to output final Gaussian parameters. To merge history, we compute the triangulated scene flow from the input views and perform keypoint guided deformations. These deformed splats can be treated identically to the input-aligned splats, and be similarly deposited into voxel grid to merge the previous state with the current state.</figcaption>
     
-        <br><br>
+        <br>
         <figcaption class="figure-caption has-text-centered">
           <strong>SplatVoxel achieves efficient training with better reconstruction details.</strong>
         </figcaption>
         <br>
+
         <!-- Two Images in a Row with Figure Caption -->
         <figure>
           <div class="image-row">
