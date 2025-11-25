@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SplatVoxel: Learning Efficient Fuse-and-Refine for Feed-Forward 3D Gaussian Splatting</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Fonts & CSS (same stack as NTS) -->
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/icon.png">
+
+  <style>
+    .is-max-desktop { max-width: 1100px; }
+    .mt-3 { margin-top: 1rem !important; }
+    .mt-4 { margin-top: 1.5rem !important; }
+    .mt-5 { margin-top: 2rem !important; }
+    .mt-6 { margin-top: 3rem !important; }
+    .box-header { font-weight: 700; margin-bottom: 0.5rem; }
+    .image img { border-radius: 10px; }
+  </style>
+</head>
+<body>
+
+<!-- 0) Navbar / header (logo & quick anchors) -->
+<header class="navbar is-spaced" role="navigation" aria-label="main navigation">
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="#hero">SplatVoxel</a>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="mainNav">
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+      </a>
+    </div>
+    <nav id="mainNav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#overview">Overview</a>
+        <a class="navbar-item" href="#streaming">History-Aware Streaming</a>
+        <a class="navbar-item" href="#results">Results</a>
+        <a class="navbar-item" href="#bibtex">BibTeX</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Learning Efficient Fuse-and-Refine for Feed-Forward 3D Gaussian Splatting Splat</h1>
+            <p class="subtitle is-5 has-text-grey-light" style="margin-top:-1rem;">
+            Previously titled <em>"SplatVoxel: History-Aware Novel View Streaming without Temporal Training"</em>
+            </p>
+          
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://19reborn.github.io/">Yiming Wang</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://people.csail.mit.edu/lrchai/">Lucy Chai</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://roxanneluo.github.io">Xuan Luo</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://m-niemeyer.github.io/">Michael Niemeyer</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://mlagunas.me/">Manuel Lagunas</a><sup>2</sup>,
+            </span>
+            <br>
+            <span class="author-block">
+              <a href="https://stephenlombardi.github.io/">Stephen Lombardi</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://vlg.inf.ethz.ch/team/Prof-Dr-Siyu-Tang.html">Siyu Tang</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="http://www.kevinkingo.com/">Tiancheng Sun</a><sup>2</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>ETH Zurich,</span>
+            <span class="author-block"><sup>2</sup>Google</span>
+          </div>
+
+        <p class="is-size-5 mt-2" style="font-weight:700; color:black;">
+            NeurIPS 2025
+        </p>
+          
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2503.14698"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <!-- <span class="link-block">
+                <a href="https://youtu.be/DXQO4E-ShbI"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/19reborn/PICT_smoke"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 2) Overview column = left side of poster -->
+<section id="overview" class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-variable is-6 is-multiline">
+
+      <!-- 2.1 Splat–Voxel Fusion (top-left blue box) -->
+      <div class="column is-6">
+        <div class="box">
+          <div class="box-header">
+            Splat–Voxel Fusion for Feed-Forward<br>Reconstruction and Streaming
+          </div>
+          <ol class="content" style="margin-left:1.25rem;">
+            <li>Flexible 3D placement and density control for feed-forward 3D Gaussian splatting, moving beyond per-pixel prediction.</li>
+            <li>15 FPS online sparse-view streaming with history reuse and no temporal training.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- 2.2 Core Structure (bottom-left blue box) -->
+      <div class="column is-6">
+        <div class="box">
+          <div class="box-header">
+            Core Structure: Sparse-Voxel Transformer<br>for Fusing and Refining Primitives
+          </div>
+          <figure class="image mt-2">
+            <!-- poster core diagram -->
+            <img src="./static/images/core_structure.png" alt="Core sparse-voxel transformer structure">
+          </figure>
+          <ol class="content mt-2" style="margin-left:1.25rem;">
+            <li>Supports unbounded scenes via a cost-volume representation.</li>
+            <li>Extends to dynamic scenes by merging and refining temporal primitives in a canonical 3D space.</li>
+          </ol>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 3) Center column = “Zero-shot extension” & “Online Streaming Fusion” -->
+<section id="streaming" class="section">
+  <div class="container is-max-desktop">
+
+    <!-- 3.1 Zero-shot Extension block -->
+    <h2 class="title is-3">Zero-shot Extension: History-Aware Novel View Streaming</h2>
+
+    <div class="columns is-variable is-6">
+      <!-- left: task visual (multi-view stream, per-frame vs ours) -->
+      <div class="column is-7">
+        <figure class="image">
+          <img src="./static/images/online_task.png"
+               alt="Task: Online novel view streaming and comparison between per-frame and history-aware model">
+        </figure>
+      </div>
+
+      <!-- right: task / challenges / table -->
+      <div class="column is-5">
+        <h3 class="title is-5">Task</h3>
+        <p class="content">
+          Online Novel View Streaming: given a multi-view RGB stream, produce a continuous sequence of
+          high-quality, temporally consistent novel views.
+        </p>
+
+        <h3 class="title is-5 mt-4">Challenges</h3>
+        <ol class="content" style="margin-left:1.25rem;">
+          <li><strong>Interactive speed:</strong> achieving &gt;15 FPS reconstruction.</li>
+          <li><strong>Sparse-view input:</strong> limited viewpoints per frame.</li>
+          <li><strong>History awareness:</strong> effectively leveraging historical information from unbounded video streams.</li>
+        </ol>
+
+        <figure class="image mt-4">
+          <img src="./static/images/streaming_method_table.png"
+               alt="Comparison table of methods: interactive speed, sparse-view input, history awareness">
+        </figure>
+      </div>
+    </div>
+
+    <!-- 3.2 Online Streaming Fusion row (bottom center of poster) -->
+    <h3 class="title is-4 mt-6">
+      Online Streaming Fusion: 15 FPS with 350ms Delay on a Single H100
+    </h3>
+    <figure class="image mt-3">
+      <img src="./static/images/online_streaming_fusion.png"
+           alt="Training on static scenes and inference on dynamic scenes using Splat and Voxel modules">
+      <figcaption class="has-text-centered is-size-7 mt-2">
+        Training on static scenes and inference on dynamic scenes. The Splat module predicts multi-view Gaussian splats,
+        while the Voxel module fuses historical and current primitives in a sparse-voxel transformer.
+      </figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<!-- 4) Right column = quantitative & streaming results -->
+<section id="results" class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Results</h2>
+
+    <!-- 4.1 Feed-forward NVS (top-right panel) -->
+    <h3 class="title is-4 mt-4">Results on Feed-Forward Novel View Synthesis</h3>
+
+    <div class="columns is-variable is-5">
+      <div class="column">
+        <figure class="image">
+          <img src="./static/images/dl3dv_table.png"
+               alt="DL3DV dataset comparison table">
+          <figcaption class="has-text-centered is-size-7 mt-2">
+            Comparisons on DL3DV dataset (PSNR, SSIM, LPIPS).
+          </figcaption>
+        </figure>
+      </div>
+      <div class="column">
+        <figure class="image">
+          <img src="./static/images/realestate_results.png"
+               alt="RealEstate10K results – table + visual examples">
+          <figcaption class="has-text-centered is-size-7 mt-2">
+            Comparisons on RealEstate10K with visual examples.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- 4.2 Novel View Streaming (bottom-right panel) -->
+    <h3 class="title is-4 mt-6">Results on Novel View Streaming</h3>
+
+    <figure class="image">
+      <img src="./static/images/streaming_table.png"
+           alt="Novel view streaming quantitative results">
+      <figcaption class="has-text-centered is-size-7 mt-2">
+        Streaming metrics on Neural3DVideo and LongVolumetricVideo benchmarks.
+      </figcaption>
+    </figure>
+
+    <figure class="image mt-4">
+      <img src="./static/images/streaming_visuals.png"
+           alt="Qualitative streaming comparison across methods">
+      <figcaption class="has-text-centered is-size-7 mt-2">
+        Qualitative novel view streaming comparisons (GT, 3DGS variants, GS-LRM, and ours).
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 5) BibTeX -->
+<section id="bibtex" class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3">BibTeX</h2>
+<pre><code>@misc{wang2025splatvoxel,
+  title        = {SplatVoxel: History-Aware Novel View Streaming without Temporal Training},
+  author       = {Yiming Wang and Lucy Chai and Xuan Luo and Michael Niemeyer and Manuel Lagunas and Stephen Lombardi and Siyu Tang and Tiancheng Sun},
+  year         = {2025},
+  eprint       = {2503.14698},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.CV},
+  url          = {https://arxiv.org/abs/2503.14698}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered is-size-7">
+      Template adapted from Nerfies / NTS project pages.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // simple burger
+  document.addEventListener('DOMContentLoaded', () => {
+    const burgers = Array.from(document.querySelectorAll('.navbar-burger'));
+    burgers.forEach(b => {
+      b.addEventListener('click', () => {
+        const target = document.getElementById(b.dataset.target);
+        b.classList.toggle('is-active');
+        target.classList.toggle('is-active');
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

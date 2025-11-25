@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="SplatVoxel: History-Aware Novel View Streaming without Temporal Training">
+        content="SplatVoxel: Learning Efficient Fuse-and-Refine for Feed-Forward 3D Gaussian Splatting">
   <meta name="keywords" content="Novel View Synthesis, Streaming Reconstruction, Feed-forward Model">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SplatVoxel: History-Aware Novel View Streaming without Temporal Training</title>
+  <title>SplatVoxel: Learning Efficient Fuse-and-Refine for Feed-Forward 3D Gaussian Splatting</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
@@ -18,13 +18,11 @@
     }
 
     gtag('js', new Date());
-
     gtag('config', 'G-PYVRSFMDRL');
   </script>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
         rel="stylesheet">
-
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
@@ -41,6 +39,135 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+
+  <!-- Unified custom styles -->
+  <style>
+    /* Global layout: keep content within a nice centered column */
+    .container.is-max-desktop {
+      max-width: 960px;
+    }
+
+    /* Navbar */
+    .navbar {
+      border-bottom: 1px solid #eee;
+    }
+
+    /* Hero (title) section tweaks */
+    .hero.main-hero .hero-body {
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .publication-title {
+      margin-bottom: 1.25rem;
+    }
+
+    .publication-authors {
+      margin-bottom: 0.5rem;
+    }
+
+    .publication-links {
+      margin-top: 1.5rem;
+    }
+
+    .publication-links .button {
+      margin: 0 0.25rem;
+    }
+
+    /* Teaser media row (video + image + dotted line) */
+    .media-row1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .media-row1 video,
+    .media-row1 img {
+      flex: 1 1 0;
+      max-height: 350px;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .separator {
+      width: 2px;
+      align-self: stretch;
+      border-left: 2px dotted gray;
+    }
+
+    .hero.teaser .hero-body {
+      padding-top: 2rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .figure-caption {
+      text-align: center;
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+    }
+
+    /* Cropped video wrapper for history-aware section */
+    .video-wrapper {
+      height: 400px;
+      overflow: hidden;
+      position: relative;
+      margin-top: 1.5rem;
+      border-radius: 8px;
+    }
+
+    .cropped-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: -30px;
+      left: 0;
+    }
+
+    /* Method overview image row */
+    .image-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .image-row img {
+      flex: 1 1 0;
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+    }
+
+    /* Comparison section spacing */
+    .hero.comparison .hero-body {
+      padding-top: 2rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .hero.comparison img,
+    .hero.comparison video {
+      margin-top: 1rem;
+      border-radius: 8px;
+    }
+
+    /* BibTeX section */
+    #BibTeX pre {
+      background-color: #f7f7f7;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 2rem 1.5rem;
+    }
+  </style>
 </head>
 <body>
 
@@ -55,26 +182,32 @@
   <div class="navbar-menu">
     <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
       <a class="navbar-item" href="https://19reborn.github.io/">
-      <span class="icon">
+        <span class="icon">
           <i class="fas fa-home"></i>
-      </span>
+        </span>
       </a>
-
     </div>
-
   </div>
 </nav>
 
-
-<section class="hero">
+<!-- Title / authors -->
+<section class="hero main-hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">SplatVoxel: History-Aware Novel View Streaming without Temporal Training</h1>
+          <h1 class="title is-1 publication-title">
+            Learning Efficient Fuse-and-Refine for Feed-Forward 3D Gaussian Splatting
+          </h1>
+
+    <p class="subtitle is-5 has-text-grey-light" style="margin-top:-1rem;">
+    Previously titled <em>"SplatVoxel: History-Aware Novel View Streaming without Temporal Training"</em>
+    </p>
+
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="https://19reborn.github.io/">Yiming Wang</a><sup>1</sup>,</span>
+              <a href="https://19reborn.github.io/">Yiming Wang</a><sup>1</sup>,
+            </span>
             <span class="author-block">
               <a href="https://people.csail.mit.edu/lrchai/">Lucy Chai</a><sup>2</sup>,
             </span>
@@ -104,42 +237,42 @@
             <span class="author-block"><sup>2</sup>Google</span>
           </div>
 
+          <p class="is-size-5 mt-2" style="font-weight:700; color:black;">
+              NeurIPS 2025
+          </p>
 
-          
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2503.14698"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <!-- Video Link. -->
-              <!-- <span class="link-block">
-                <a href="https://youtu.be/DXQO4E-ShbI"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
-                  <span>Video</span>
-                </a>
-              </span> -->
-              <!-- Code Link. -->
-              <!-- <span class="link-block">
-                <a href="https://github.com/19reborn/PICT_smoke"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
-              </span>
-            </div> -->
-
+          <div class="publication-links">
+            <!-- PDF Link. -->
+            <span class="link-block">
+              <a href="https://arxiv.org/abs/2503.14698"
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="ai ai-arxiv"></i>
+                </span>
+                <span>arXiv</span>
+              </a>
+            </span>
+            <!-- Video / Code links kept as comments -->
+            <!--
+            <span class="link-block">
+              <a href="https://youtu.be/DXQO4E-ShbI"
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fab fa-youtube"></i>
+                </span>
+                <span>Video</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="https://github.com/19reborn/PICT_smoke"
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Code</span>
+              </a>
+            </span>
+            -->
           </div>
         </div>
       </div>
@@ -147,15 +280,17 @@
   </div>
 </section>
 
-
+<!-- Teaser: task + flicker -->
 <section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+
       <div class="media-row1">
         <!-- First Video -->
         <video id="intro_demo" autoplay muted loop playsinline>
           <source src="./static/videos/intro_demo.mp4" type="video/mp4">
         </video>
+
         <!-- Dotted Vertical Line Separator -->
         <div class="separator"></div>
 
@@ -163,212 +298,112 @@
         <img src="./static/images/paper_teaser.png" alt="Teaser image of SplatVoxel">
       </div>
 
-      <style>
-        .media-row1 {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 20px; /* Adds spacing between elements */
-        }
-      
-        /* Ensure both video and image have the same height */
-        .media-row1 video,
-        .media-row1 img {
-          height: 350px; /* Set a fixed height */
-          width: auto; /* Maintain aspect ratio */
-        }
-      
-        /* Ensure video fills the height properly */
-        .media-row1 video {
-          object-fit: cover; /* Ensures video fits the defined height */
-        }
-      
-        /* Dotted Vertical Line Separator */
-        .separator {
-          width: 2px; /* Line thickness */
-          height: 300px; /* Match the height of video and image */
-          border-left: 2px dotted gray; /* Dotted vertical line */
-          display: block;
-        }
-      </style>
-      <br>
-      <figcaption class="figure-caption has-text-centered">
-        <strong>(Left)</strong> We study the problem of Online Novel View Streaming from Sparse-view RGB Videos.
-        <br>
-        <strong>(Right)</strong> Per-frame reconstruction methods are prone to 
-        <strong>temporal flickering artifacts</strong>. In contrast, our <strong>history-aware</strong> model delivers high visual quality and temporal consistency, running at 
+      <figcaption class="figure-caption">
+        <strong>(Left)</strong> We study the problem of Online Novel View Streaming from Sparse-view RGB Videos.<br>
+        <strong>(Right)</strong> Per-frame reconstruction methods are prone to
+        <strong>temporal flickering artifacts</strong>. In contrast, our <strong>history-aware</strong> model delivers high visual quality and temporal consistency, running at
         <strong>15 fps with a 350ms delay</strong> on two-view inputs of 320 × 240 resolution.
       </figcaption>
-      <br><br><br><br>
 
-      <!-- <h3 class="title is-4">History-Aware Streaming Reconstruction  <strong style="color: green;">w/o Temporal Training & Test-time Optimization</strong></h3>
-      <div class="video-wrapper">
-        <video class="cropped-video" autoplay muted loop playsinline>
-          <source src="./static/videos/gslrm_vs_ours.mp4" type="video/mp4">
-        </video>
+      <hr>
+
+      <h3 class="title is-3 has-text-centered">
+        <strong style="color: orange;">History-Aware</strong> Streaming Reconstruction
+        <strong style="color: green;">w/o Temporal Training</strong>
+      </h3>
+
+      <div class="has-text-centered" style="margin-top: 1rem;">
+        <img src="./static/images/flicker_figure.png" width="80%" alt="Flicker analysis figure">
       </div>
-      
-      <style>
-        .video-wrapper {
-          height: 400px; /* Match the height of the video */
-          overflow: hidden; /* Hide the overflow */
-          position: relative; /* Enable positioning for the video */
-          margin-bottom: 00px; /* Add space below the video */
-        }
-      
-        .cropped-video {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          position: absolute; /* Position the video absolutely within the wrapper */
-          top: -30px;
-          left: 0;
-        }
-      </style> -->
 
-      <h3 class="title is-3"><strong style="color: orange;">History-Aware</strong> Streaming Reconstruction  <strong style="color: green;">w/o Temporal Training</strong></h3>
-      <br>
-      <div style="text-align: center;">
-        <img src="./static/images/flicker_figure.png" width="80%" />
-    </div>
-    <br>
       <div class="video-wrapper">
         <video class="cropped-video" autoplay muted loop playsinline>
           <source src="./static/videos/gslrm_vs_ours.mp4" type="video/mp4">
         </video>
       </div>
 
-      <style>
-        .video-wrapper {
-          height: 400px; /* Match the height of the video */
-          overflow: hidden; /* Hide the overflow */
-          position: relative; /* Enable positioning for the video */
-          margin-bottom: 00px; /* Add space below the video */
-        }
-      
-        .cropped-video {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          position: absolute; /* Position the video absolutely within the wrapper */
-          top: -30px;
-          left: 0;
-        }
-      </style>
-
-      <!-- Final Image with reduced size and white space -->
-      <!-- <img src="./static/images/baseline_full.png" alt="Teaser image of SplatVoxel" class="final-image" /> -->
-    </div>
     </div>
   </div>
 </section>
 
-
-
-  
-
-
-
-
-
+<!-- Method Overview -->
 <section class="section">
   <div class="container is-max-desktop">
-
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
         <h2 class="title is-3">Method Overview</h2>
 
         <div>
-          <p class="has-text-justified">We present a <strong>Hybrid Splat-Voxel feed-forward scene reconstruction framework</strong>. Our system is trained only on static scenes, and can generalize at inference time for <em> zero-shot history-aware 4D novel view streaming </em>.</p>
+          <p class="has-text-justified">
+            We present a <strong>Hybrid Splat-Voxel feed-forward scene reconstruction framework</strong>. Our system is trained only on static scenes, and can generalize at inference time for
+            <em> zero-shot history-aware 4D novel view streaming </em>.
+          </p>
         </div>
-        <br>
 
-        <img src="./static/images/paper_overview.png" alt="Overview image of SplatVoxel" class="'center" width="100%"/>
-        <figcaption class="has-text-justified">Our hybrid SplatVoxel model first extracts input image features using a multi-view transformer, which outputs pixel-aligned Gaussian splats for each input image with associated features. The splat features are then deposited onto a coarse-to-fine voxel grid using the decoded position, and a secondary sparse voxel transformer processes the grid features to output final Gaussian parameters. To merge history, we compute the triangulated scene flow from the input views and perform keypoint guided deformations. These deformed splats can be treated identically to the input-aligned splats, and be similarly deposited into voxel grid to merge the previous state with the current state.</figcaption>
-    
-        <br>
-        <figcaption class="figure-caption has-text-centered">
+        <figure style="margin-top: 1.5rem;">
+          <img src="./static/images/paper_overview.png"
+               alt="Overview image of SplatVoxel"
+               class="center"
+               width="100%"/>
+          <figcaption class="has-text-justified" style="margin-top: 0.75rem;">
+            Our hybrid SplatVoxel model first extracts input image features using a multi-view transformer, which outputs pixel-aligned Gaussian splats for each input image with associated features. The splat features are then deposited onto a coarse-to-fine voxel grid using the decoded position, and a secondary sparse voxel transformer processes the grid features to output final Gaussian parameters. To merge history, we compute the triangulated scene flow from the input views and perform keypoint guided deformations. These deformed splats can be treated identically to the input-aligned splats, and be similarly deposited into voxel grid to merge the previous state with the current state.
+          </figcaption>
+        </figure>
+
+        <figcaption class="figure-caption">
           <strong>SplatVoxel achieves efficient training with better reconstruction details.</strong>
         </figcaption>
-        <br>
 
         <!-- Two Images in a Row with Figure Caption -->
         <figure>
           <div class="image-row">
-            <img src="./static/images/2d_3d_transformer_ablation.png" alt="Teaser image of SplatVoxel" class="center" />
-            <img src="./static/images/rel10k_comparison_v2.png" alt="Teaser image of SplatVoxel" class="center" />
+            <img src="./static/images/2d_3d_transformer_ablation.png"
+                 alt="Ablation image of SplatVoxel"
+                 class="center" />
+            <img src="./static/images/rel10k_comparison_v2.png"
+                 alt="Comparison image of SplatVoxel"
+                 class="center" />
           </div>
-
         </figure>
-
-        <style>
-          /* Flexbox layout for the image row */
-          .image-row {
-            display: flex;
-            justify-content: space-between; /* Space out the images */
-            align-items: center; /* Center images vertically */
-            gap: 20px; /* Add spacing between images */
-          }
-
-          /* Ensure images have consistent height and maintain aspect ratio */
-          .image-row img {
-            width: 48%; /* Adjust width to fit two images in a row */
-            height: 300px; /* Set a fixed height for both images */
-            object-fit: contain; /* Ensure the entire image is visible without stretching */
-          }
-
-          /* Center the figure caption */
-          .figure-caption {
-            margin-top: 10px; /* Add space above the caption */
-            text-align: center; /* Center-align the caption text */
-            font-size: 1.1em; /* Adjust font size as needed */
-          }
-        </style>
 
       </div>
     </div>
-
   </div>
 </section>
 
-<br> <br> <br>
-
+<!-- Comparison Section -->
 <section class="hero comparison">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Comparison with Exisiting Novel View Synthesis Methods </h2>
 
-      <h2 class="title is-3">Comparison with Exisiting Novel View Synthesis Methods </h2>
+      <div class="has-text-centered">
+        <img src="./static/images/main_table.png"
+             alt="Main table of SplatVoxel"
+             class="center" />
+      </div>
 
-        <br>
-        <!-- Teaser Image -->
-        <img src="./static/images/main_table.png" alt="Teaser image of SplatVoxel" class="'center" />
-        <br>
-        <img src="./static/images/main_comparison.png" alt="Teaser image of SplatVoxel" class="'center" />
-        <br><br><br>
+      <div class="has-text-centered">
+        <img src="./static/images/main_comparison.png"
+             alt="Main comparison image of SplatVoxel"
+             class="center" />
+      </div>
 
-      <figure>
+      <figure class="mt-5">
         <video id="nv3d_cmp" autoplay muted loop playsinline width="100%">
           <source src="./static/videos/full_comparison.mp4" type="video/mp4">
         </video>
-        <br><br><br>
-        <video id="corgi_cmp" autoplay muted loop playsinline width="100%">
+
+        <video id="corgi_cmp" autoplay muted loop playsinline width="100%" style="margin-top: 2rem;">
           <source src="./static/videos/corgi_results.mp4" type="video/mp4">
         </video>
-        <!-- <figcaption class="has-text-justified">
-          We compare our method with state-of-the-art approaches.
-        </figcaption> -->
       </figure>
 
+    </div>
   </div>
 </section>
 
-
-
-
-
-
-
-
+<!-- BibTeX -->
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
@@ -385,35 +420,13 @@
   </div>
 </section>
 
-
 <footer class="footer">
   <div class="container">
-    <!-- <div class="content has-text-centered">
-      <a class="icon-link"
-         href="./static/videos/nerfies_paper.pdf">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
-    </div> -->
     <div class="columns is-centered">
       <div class="column is-8">
         <div class="content">
-          The website template is borrowed from <a
-          href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
-          <!-- <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
-          </p> -->
+          The website template is borrowed from
+          <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
         </div>
       </div>
     </div>
