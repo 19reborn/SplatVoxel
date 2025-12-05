@@ -8,7 +8,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SplatVoxel: Learning Efficient Fuse-and-Refine for Feed-Forward 3D Gaussian Splatting</title>
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -30,8 +29,6 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
-  <!-- <link rel="icon" href="./static/images/ICON.webp"> -->
   <link rel="icon" href="./static/images/icon.png">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -40,7 +37,6 @@
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
 
-  <!-- Unified custom styles -->
   <style>
     /* Global layout: keep content within a nice centered column */
     .container.is-max-desktop {
@@ -71,7 +67,7 @@
     }
 
     .publication-links .button {
-      margin: 0 0.25rem;
+      margin: 0 0.25rem 0.5rem 0.25rem; /* Added bottom margin for wrapping on mobile */
     }
 
     /* Teaser media row (video + image + dotted line) */
@@ -161,11 +157,59 @@
       padding: 1rem;
       border-radius: 8px;
       overflow-x: auto;
+      white-space: pre-wrap; /* Allows wrapping on mobile */
+      word-wrap: break-word;
     }
 
     /* Footer */
     .footer {
       padding: 2rem 1.5rem;
+    }
+
+    /* --- MOBILE RESPONSIVE TWEAKS --- */
+    @media screen and (max-width: 768px) {
+      /* Stack the teaser video and image */
+      .media-row1 {
+        flex-direction: column;
+      }
+      
+      /* Hide the vertical dotted line on mobile */
+      .separator {
+        display: none;
+      }
+
+      /* Stack the method overview images */
+      .image-row {
+        flex-direction: column;
+      }
+
+      /* Reduce the fixed height of the cropped video wrapper so it fits better */
+      .video-wrapper {
+        height: 250px;
+      }
+
+      /* Reduce title font size */
+      .title.is-1 {
+        font-size: 2rem;
+      }
+
+      .title.is-3 {
+        font-size: 1.5rem;
+      }
+
+      /* Add side padding to main container */
+      .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      
+      /* Ensure images/videos take full width */
+      .media-row1 video,
+      .media-row1 img,
+      .image-row img {
+        width: 100%;
+        max-height: none; /* Let height adapt */
+      }
     }
   </style>
 </head>
@@ -173,13 +217,13 @@
 
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
     </a>
   </div>
-  <div class="navbar-menu">
+  <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
       <a class="navbar-item" href="https://19reborn.github.io/">
         <span class="icon">
@@ -190,7 +234,6 @@
   </div>
 </nav>
 
-<!-- Title / authors -->
 <section class="hero main-hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
@@ -242,7 +285,6 @@
           </p>
 
           <div class="publication-links">
-            <!-- PDF Link. -->
             <span class="link-block">
               <a href="https://arxiv.org/abs/2503.14698"
                  class="external-link button is-normal is-rounded is-dark">
@@ -252,27 +294,6 @@
                 <span>arXiv</span>
               </a>
             </span>
-            <!-- Video / Code links kept as comments -->
-            <!--
-            <span class="link-block">
-              <a href="https://youtu.be/DXQO4E-ShbI"
-                 class="external-link button is-normal is-rounded is-dark">
-                <span class="icon">
-                  <i class="fab fa-youtube"></i>
-                </span>
-                <span>Video</span>
-              </a>
-            </span>
-            <span class="link-block">
-              <a href="https://github.com/19reborn/PICT_smoke"
-                 class="external-link button is-normal is-rounded is-dark">
-                <span class="icon">
-                  <i class="fab fa-github"></i>
-                </span>
-                <span>Code</span>
-              </a>
-            </span>
-            -->
           </div>
         </div>
       </div>
@@ -280,21 +301,17 @@
   </div>
 </section>
 
-<!-- Teaser: task + flicker -->
 <section class="hero teaser">
   <div class="hero-body">
     <div class="container is-max-desktop">
 
       <div class="media-row1">
-        <!-- First Video -->
         <video id="intro_demo" autoplay muted loop playsinline>
           <source src="./static/videos/intro_demo.mp4" type="video/mp4">
         </video>
 
-        <!-- Dotted Vertical Line Separator -->
         <div class="separator"></div>
 
-        <!-- Teaser Image -->
         <img src="./static/images/paper_teaser.png" alt="Teaser image of SplatVoxel">
       </div>
 
@@ -326,7 +343,6 @@
   </div>
 </section>
 
-<!-- Method Overview -->
 <section class="section">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
@@ -354,7 +370,6 @@
           <strong>SplatVoxel achieves efficient training with better reconstruction details.</strong>
         </figcaption>
 
-        <!-- Two Images in a Row with Figure Caption -->
         <figure>
           <div class="image-row">
             <img src="./static/images/2d_3d_transformer_ablation.png"
@@ -371,7 +386,6 @@
   </div>
 </section>
 
-<!-- Comparison Section -->
 <section class="hero comparison">
   <div class="hero-body">
     <div class="container is-max-desktop">
@@ -403,7 +417,6 @@
   </div>
 </section>
 
-<!-- BibTeX -->
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
@@ -432,6 +445,22 @@
     </div>
   </div>
 </footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+    if ($navbarBurgers.length > 0) {
+      $navbarBurgers.forEach( el => {
+        el.addEventListener('click', () => {
+          const target = el.dataset.target;
+          const $target = document.getElementById(target);
+          el.classList.toggle('is-active');
+          $target.classList.toggle('is-active');
+        });
+      });
+    }
+  });
+</script>
 
 </body>
 </html>
